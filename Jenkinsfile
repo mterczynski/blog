@@ -14,12 +14,7 @@ pipeline {
 			steps {
 				sh '''
                     bundle exec jekyll build
-                    rm -rf blog
-                    mv _site blog
-                    ssh root@mterczynski.pl
-                    rm -rf /var/www/html/blog 
-                    exit
-					scp -r blog ${DESTINATION}
+					scp -r _site/* ${DESTINATION}
 				'''
 			}
 		}
