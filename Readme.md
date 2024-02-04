@@ -8,4 +8,6 @@ Open http://localhost:4000
 
 ## Building the app
 
-todo
+```bash
+bundle exec jekyll build # ignore the warning messages
+```
