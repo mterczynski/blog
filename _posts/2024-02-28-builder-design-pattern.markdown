@@ -16,7 +16,7 @@ class Car {
   private color: string;
   private weight: number;
   private price: number;
-  private brand: number;
+  private brand: string;
   private productionYear: number;
 
   constructor(
@@ -24,103 +24,13 @@ class Car {
     price: number,
     brand: string,
     productionYear: number,
-    color?: string
+    color: string = "red"
   ) {
     this.weight = weight;
     this.price = price;
     this.brand = brand;
     this.productionYear = productionYear;
-    this.color = color ?? "red";
-  }
-
-  public getColor() {
-    return this.color;
-  }
-
-  public getWeight() {
-    return this.weight;
-  }
-
-  public getBrand() {
-    return this.brand;
-  }
-
-  public getProductionYear() {
-    return this.productionYear;
-  }
-}
-
-const car = new Car(2_000, 50_000, "Ford", 2013);
-```
-
-This code is a bit lenghtly given its simplicity. Let's make it shorter using [parameter properties](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties) syntax provided by TypeScript.
-
-```typescript
-// 2nd example: class with parameter properties
-class Car {
-  constructor(
-    private weight: number,
-    private price: number,
-    private brand: string,
-    private productionYear: number,
-    private color?: string
-  ) {
-    this.color = this.color ?? "red";
-  }
-
-  public getColor() {
-    return this.color;
-  }
-
-  public getWeight() {
-    return this.weight;
-  }
-
-  public getBrand() {
-    return this.brand;
-  }
-
-  public getProductionYear() {
-    return this.productionYear;
-  }
-}
-
-const car = new Car(2_000, 50_000, "Ford", 2013);
-```
-
-The next problem that we have is that there are a lot of parameters in the constructor, which is hard to read. Let's fix that.
-
-```typescript
-// 3rd example: class with parameters packed into a single object
-class Car {
-  private color: string;
-  private weight: number;
-  private price: number;
-  private brand: string;
-  private productionYear: number;
-
-  constructor({
-    color,
-    weight,
-    price,
-    brand,
-    productionYear,
-  }: {
-    color: string;
-    weight: number;
-    price: number;
-    brand: string;
-    productionYear: number;
-  }) {
-    this.color = color ?? "red";
-    this.weight = weight;
-    this.price = price;
-    this.brand = brand;
-    this.productionYear = productionYear;
-  }
-
-  public getColor() {
-    return this.color;
+    this.color = color;
   }
 
   public getWeight() {
@@ -138,6 +48,96 @@ class Car {
   public getProductionYear() {
     return this.productionYear;
   }
+
+  public getColor() {
+    return this.color;
+  }
+}
+
+const car = new Car(2_000, 50_000, "Ford", 2013);
+```
+
+This code is a bit lenghtly given its simplicity. Let's make it shorter using [parameter properties](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties) syntax available in TypeScript.
+
+```typescript
+// 2nd example: class with parameter properties
+class Car {
+  constructor(
+    private weight: number,
+    private price: number,
+    private brand: string,
+    private productionYear: number,
+    private color: string = "red"
+  ) {}
+
+  public getWeight() {
+    return this.weight;
+  }
+
+  public getPrice() {
+    return this.price;
+  }
+
+  public getBrand() {
+    return this.brand;
+  }
+
+  public getProductionYear() {
+    return this.productionYear;
+  }
+
+  public getColor() {
+    return this.color;
+  }
+}
+
+const car = new Car(2_000, 50_000, "Ford", 2013);
+```
+
+The next problem that we have is that there are a lot of parameters in the constructor, which is hard to read. Let's fix that.
+
+```typescript
+// 3rd example: class with all parameters packed into a single object
+class Car {
+  private color: string;
+  private weight: number;
+  private price: number;
+  private brand: string;
+  private productionYear: number;
+
+  constructor({ color, weight, price, brand, productionYear }: {
+    color?: string;
+    weight: number;
+    price: number;
+    brand: string;
+    productionYear: number;
+  }) {
+    this.color = color ?? "red";
+    this.weight = weight;
+    this.price = price;
+    this.brand = brand;
+    this.productionYear = productionYear;
+  }
+
+  public getWeight() {
+    return this.weight;
+  }
+
+  public getPrice() {
+    return this.price;
+  }
+
+  public getBrand() {
+    return this.brand;
+  }
+
+  public getProductionYear() {
+    return this.productionYear;
+  }
+
+  public getColor() {
+    return this.color;
+  }
 }
 
 const car = new Car({
@@ -148,7 +148,7 @@ const car = new Car({
 });
 ```
 
-The code has become lengthy again, but now the code for creating a new car is very readable. We can now also provide the parameters in any order we want.
+The code has become lengthy again, but now the code for creating a new car is very readable. We can now also provide the parameters in any order we want which can be very handy.
 
 ```typescript
 // this also works:
@@ -160,16 +160,17 @@ const car = new Car({
 });
 ```
 
-Let's compare that code with one varation of the builder pattern:
+Let's now introduce one variation of the builder pattern. The builder pattern typically uses 2 separate classes: a builder class
+and a base class. The builder class is a class with methods for adjusting the properties of the built object and a method for building the object.
 
 ```typescript
 // 4th approach: builder class + class with parameter properties
 class CarBuilder {
-  private color: string;
-  private weight: number;
-  private price: number;
-  private brand: string;
-  private productionYear: number;
+  private color?: string;
+  private weight?: number;
+  private price?: number;
+  private brand?: string;
+  private productionYear?: number;
 
   public setColor(color: string) {
     this.color = color;
@@ -191,20 +192,16 @@ class CarBuilder {
     return this;
   }
 
-  public setProductionYear(productionYear: string) {
+  public setProductionYear(productionYear: number) {
     this.productionYear = productionYear;
     return this;
   }
 
   public build() {
-    if (this.weight === undefined)
-      throw new Error("The weight parameter is required");
-    if (this.price === undefined)
-      throw new Error("The price parameter is required");
-    if (this.brand === undefined)
-      throw new Error("The brand parameter is required");
-    if (this.productionYear === undefined)
-      throw new Error("The productionYear parameter is required");
+    if (this.weight === undefined) throw new Error("The weight parameter is required");
+    if (this.price === undefined) throw new Error("The price parameter is required");
+    if (this.brand === undefined) throw new Error("The brand parameter is required");
+    if (this.productionYear === undefined) throw new Error("The productionYear parameter is required");
 
     return new Car(
       this.weight,
@@ -216,6 +213,7 @@ class CarBuilder {
   }
 }
 
+// the exact same class from 2nd example:
 class Car {
   constructor(
     private weight: number,
@@ -227,12 +225,12 @@ class Car {
     this.color = this.color ?? "red";
   }
 
-  public getColor() {
-    return this.color;
-  }
-
   public getWeight() {
     return this.weight;
+  }
+
+  public getPrice() {
+    return this.price;
   }
 
   public getBrand() {
@@ -241,6 +239,10 @@ class Car {
 
   public getProductionYear() {
     return this.productionYear;
+  }
+
+  public getColor() {
+    return this.color;
   }
 }
 
@@ -269,9 +271,10 @@ Similarly, builder setters return `this` instance of a builder which allows to c
 
 ## Conclusions
 
-The builder pattern can be useful in Java code, but it doesn't seem to be that useful in TypeScript code - it requires creating an additional class with error checking (which works only in runtime and won't give us errors in compilation time).
-I recommend using approaches from 2nd or 3rd examples instead.
+The builder pattern can be useful in Java code, but it doesn't seem to be that useful in TypeScript code - it requires creating an additional class, preferably with error checking (which works only in runtime and won't give us errors in compilation time).
+I recommend using approaches from 2nd or 3rd examples instead (which one you'd rather use will likely depend on number of constructor parameters).
 
 ### Extra notes
 
-`public` keyword is optional, I've added it to make the examples more understandable for developers with less TypeScript experience.
+- `public` keyword is optional, I've added it to make the examples more understandable for developers with less TypeScript experience.
+- getters can be created using `get` keyword (they are accessed a bit differently though).
