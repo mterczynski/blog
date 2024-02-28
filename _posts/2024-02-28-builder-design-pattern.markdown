@@ -105,14 +105,14 @@ class Car {
   private brand: string;
   private productionYear: number;
 
-  constructor({ color, weight, price, brand, productionYear }: {
+  constructor({ color = "red", weight, price, brand, productionYear }: {
     color?: string;
     weight: number;
     price: number;
     brand: string;
     productionYear: number;
   }) {
-    this.color = color ?? "red";
+    this.color = color;
     this.weight = weight;
     this.price = price;
     this.brand = brand;
@@ -161,7 +161,7 @@ const car = new Car({
 ```
 
 Let's now introduce one variation of the builder pattern. The builder pattern typically uses 2 separate classes: a builder class
-and a base class. The builder class is a class with methods for adjusting the properties of the built object and a method for building the object.
+and a base class. The builder class is usually a class with methods for adjusting the properties of the built object and a method for building the object.
 
 ```typescript
 // 4th approach: builder class + class with parameter properties
@@ -220,10 +220,8 @@ class Car {
     private price: number,
     private brand: string,
     private productionYear: number,
-    private color?: string
-  ) {
-    this.color = this.color ?? "red";
-  }
+    private color: string = "red"
+  ) {}
 
   public getWeight() {
     return this.weight;
