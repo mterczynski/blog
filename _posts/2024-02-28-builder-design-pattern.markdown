@@ -6,7 +6,7 @@ categories: design-patterns, typescript
 ---
 
 The builder pattern allows to easily create complex objects with different configurable properties.
-I'd argue that it's not the best approach to create class instances in TypeScript. I'll present a few different approaches to use classes in TypeScript and give my opinions on them.
+I'd argue that there are better alternatives to create class instances in TypeScript. I'll present a few different approaches to use classes in TypeScript and give my opinions on them.
 
 Let's start with a basic class:
 
@@ -266,6 +266,15 @@ const client = clients
 
 `Array.prototype.filter` and `Array.prototype.sort` both return an array which allows to call array methods indefinitely.
 Similarly, builder setters return `this` instance of a builder which allows to call builder setters indefinitely.
+Setter chaining is optional, `return this` can be removed, and the builder can be accessed in such manner:
+
+```typescript
+carBuilder.setWeight(2_000);
+carBuilder.setBrand("Ford");
+carBuilder.setPrice(50_000);
+carBuilder.setProductionYear(2013);
+const car = carBuilder.build();
+```
 
 ## Conclusions
 
