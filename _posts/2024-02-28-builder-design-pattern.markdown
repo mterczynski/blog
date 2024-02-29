@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Builder design pattern in TypeScript"
-date: 2024-02-10 22:34:02 +0100
+date: 2024-02-28 22:34:02 +0100
 categories: design-patterns, typescript
 ---
 
@@ -57,7 +57,7 @@ class Car {
 const car = new Car(2_000, 50_000, "Ford", 2013);
 ```
 
-This code is a bit lenghtly given its simplicity. Let's make it shorter using [parameter properties](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties) syntax available in TypeScript.
+This code is a bit lenghty given its simplicity. Let's make it shorter using [parameter properties](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties) syntax available in TypeScript.
 
 ```typescript
 // 2nd example: class with parameter properties
@@ -105,7 +105,13 @@ class Car {
   private brand: string;
   private productionYear: number;
 
-  constructor({ color = "red", weight, price, brand, productionYear }: {
+  constructor({
+    color = "red",
+    weight,
+    price,
+    brand,
+    productionYear,
+  }: {
     color?: string;
     weight: number;
     price: number;
@@ -198,10 +204,14 @@ class CarBuilder {
   }
 
   public build() {
-    if (this.weight === undefined) throw new Error("The weight parameter is required");
-    if (this.price === undefined) throw new Error("The price parameter is required");
-    if (this.brand === undefined) throw new Error("The brand parameter is required");
-    if (this.productionYear === undefined) throw new Error("The productionYear parameter is required");
+    if (this.weight === undefined)
+      throw new Error("The weight parameter is required");
+    if (this.price === undefined)
+      throw new Error("The price parameter is required");
+    if (this.brand === undefined)
+      throw new Error("The brand parameter is required");
+    if (this.productionYear === undefined)
+      throw new Error("The productionYear parameter is required");
 
     return new Car(
       this.weight,
@@ -255,20 +265,24 @@ const car = carBuilder
 console.log(car.getColor()); // red
 ```
 
-The builder pattern typically uses method chaining which you might know from RxJS or algorithms operating on arrays.
+The builder pattern typically uses method chaining which you might know from algorithms operating on arrays or strings.
 
 ```typescript
 const client = clients
   .filter((client) => client.age >= 18)
   .sort((prev, next) => prev.name.localeCompare(next.name))
   .find((client) => client.country === "Poland");
+
+const result = originalString
+  .trim() // Remove leading and trailing whitespaces
+  .toLowerCase() // Convert the string to lowercase
+  .replace(",", "") // Remove commas
+  .substring(0, 5); // Get the first 5 characters of the string
 ```
 
 #### Method chaining
 
-`Array.prototype.filter` and `Array.prototype.sort` both return an array which allows to call array methods indefinitely.
-Similarly, builder setters return `this` instance of a builder which allows to call builder setters indefinitely.
-Setter chaining is optional, `return this` can be removed, and the builder can be accessed in such manner:
+Both `Array.prototype.filter` and `Array.prototype.sort` return arrays, allowing for an indefinite chaining of array methods. Similarly, builder setters return an instance of a builder, allowing for an indefinite chaining of builder setters. Setter chaining is optional - the `return this` statement can be omitted and the builder can be accessed in such manner:
 
 ```typescript
 carBuilder.setWeight(2_000);
@@ -280,7 +294,7 @@ const car = carBuilder.build();
 
 ## Conclusions
 
-The builder pattern can be useful in Java code, but it doesn't seem to be that useful in TypeScript code - it requires creating an additional class, preferably with error checking (which works only in runtime and won't give us errors in compilation time).
+The builder pattern might be useful in Java code, but it doesn't seem to be that useful in TypeScript code - it requires creating an additional class, preferably with additional error checking (which works only in runtime and won't show any errors during compilation time).
 I recommend using approaches from 2nd or 3rd examples instead (which one you'd rather use will likely depend on number of constructor parameters).
 
 ### Extra notes
