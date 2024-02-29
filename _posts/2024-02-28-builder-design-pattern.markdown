@@ -264,6 +264,8 @@ const client = clients
   .find((client) => client.country === "Poland");
 ```
 
+### Method chaining
+
 `Array.prototype.filter` and `Array.prototype.sort` both return an array which allows to call array methods indefinitely.
 Similarly, builder setters return `this` instance of a builder which allows to call builder setters indefinitely.
 Setter chaining is optional, `return this` can be removed, and the builder can be accessed in such manner:
