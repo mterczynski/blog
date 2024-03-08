@@ -13,4 +13,4 @@ There are many AI tools available - I've made a short list of those I find the m
 - <img width=30 height=30 src="/blog/assets/ai-tools/lets-enhance.webp"> [Let's Enhance](https://letsenhance.io/) - a tool for upscaling low resolution images
 - <img width=30 height=30 src="/blog/assets/ai-tools/submagic.jpg"> [Submagic](https://www.submagic.co/) - a free tool for adding captions to videos, supports many different languages
 - <img width=30 height=30 src="/blog/assets/ai-tools/luma.png"> [Luma AI - Genie](https://lumalabs.ai/genie/) - a free tool for generating 3D meshes with textures
-- <img width=30 height=30 src="/blog/assets/ai-tools/v0.png"> [Luma AI - Genie](https://v0.dev/) - a free tool for generating websites from text prompt; the tool currently supports Vanilla HTML and React as output format
+- <img width=30 height=30 src="/blog/assets/ai-tools/v0.png"> [V0](https://v0.dev/) - a free tool by Vercel for generating websites from text prompt; the tool currently supports Vanilla HTML and React as output format
