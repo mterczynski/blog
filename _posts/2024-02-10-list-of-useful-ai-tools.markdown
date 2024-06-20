@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "List of the most useful free AI tools"
-date: 2024-02-10 22:34:02 +0100
+date: 2024-06-20 22:34:02 +0100
 categories: ai
 ---
 
