@@ -5,7 +5,7 @@ date: 2024-02-10 22:34:02 +0100
 categories: ai
 ---
 
-There are many free AI tools available - I've made a short list of those I find the most useful, here they are:
+There are many free AI tools available - I've made a short list of those I found the most useful, here they are:
 
 - <img width=30 height=30 src="/blog/assets/ai-tools/chatgpt.webp"> [ChatGPT](https://chat.openai.com/chat) is a great and free tool for generating answers to specific code problems, marketing slogans, quick (though not reliable) answers to legal issues. It has a huge amount of many different kinds of use cases, many yet undiscovered.
 - <img width=30 height=30 src="/blog/assets/ai-tools/submagic.jpg"> [Submagic](https://www.submagic.co/) is a free tool for adding captions to videos, the tool supports many different languages and can be used to quickly create YouTube Shorts
