@@ -5,7 +5,7 @@ date: 2024-06-20 22:34:02 +0100
 categories: ai
 ---
 
-Many AI tools have emerged in the past 2 years. I've tried a few of them and made a short list of those I found the most useful, here they are:
+Many AI tools have emerged in the past 2 years. I've tried a few of them and made a short list of those I found the most useful.
 
 - <img width=30 height=30 src="/blog/assets/ai-tools/chatgpt.webp"> [ChatGPT](https://chat.openai.com/chat) is one of the most useful AI tool that is publicly available (and it's free too!). It's use cases range from generating answers to specific code problems, creating ideas for blog posts, getting quick (though not reliable) answers to legal issues, to writing jokes or generating alternative endings to your favorite stories. It has a huge amount of many different kinds of use cases, many yet undiscovered.
 - <img width=30 height=30 src="/blog/assets/ai-tools/submagic.jpg"> [Submagic](https://www.submagic.co/) is a free tool for adding captions to videos. The tool supports many different languages and can be used to quickly add subtitles to short videos for yours business social media (like YouTube Shorts, TikTok)
