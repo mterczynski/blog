@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Building a simple Tic Tac Toe game in HTML, CSS, JavaScript"
-date: 2024-06-30 22:34:02 +0100
+date: 2024-09-08 10:34:02 +0100
 categories: gamedev, javascript, html, css, tutorial
 ---
 
