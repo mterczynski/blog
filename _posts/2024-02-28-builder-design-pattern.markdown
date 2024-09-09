@@ -2,7 +2,7 @@
 layout: post
 title: "Builder design pattern in TypeScript"
 date: 2024-02-28 22:34:02 +0100
-categories: design-patterns, typescript
+categories: design-patterns typescript
 ---
 
 The builder pattern allows to easily create complex objects with different configurable properties.
