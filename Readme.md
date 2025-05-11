@@ -15,3 +15,7 @@ Open http://localhost:4000
 ```bash
 bundle exec jekyll build # ignore the warning messages
 ```
+
+## WIP Articles
+
+Work in progress (WIP) articles are written at https://github.com/mterczynski/private-blog
