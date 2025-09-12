@@ -492,7 +492,7 @@ Style it:
 }
 ```
 
-And attach a listener to it in our code:
+And attach a listener to it in our script:
 
 ```javascript
 document.querySelector("#resetButton").addEventListener("click", () => {
