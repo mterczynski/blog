@@ -458,7 +458,7 @@ tile.addEventListener("click", () => {
 ```
 
 Now both players can make a move, and are shown a simple alert after making the final move.
-There is a bug to fix though - empty tiles are interactive even after finish the game. Let's fix that by extending the first [guard statement](<https://en.wikipedia.org/wiki/Guard_(computer_science)>).
+There is a bug to fix though - empty tiles are interactive even after the game is finished. Let's fix that by extending the first [guard statement](<https://en.wikipedia.org/wiki/Guard_(computer_science)>).
 
 ```javascript
 tile.addEventListener("click", () => {
