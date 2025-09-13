@@ -2,6 +2,12 @@
 
 You'll need to have Ruby and RubyGems installed to run or build the application
 
+## Install dependencies from Gemfile
+
+```bash
+bundle install
+```
+
 ## Running the blog locally
 
 ```bash
