@@ -1,8 +1,7 @@
 ---
-layout: post
-title: "How to create a simple Tic Tac Toe game using HTML, CSS, and JavaScript"
-date: 2024-09-08 10:34:02 +0100
 categories: gamedev javascript html css tutorial
+date: "2024-07-01T10:34:02Z"
+title: How to create a simple Tic Tac Toe game using HTML, CSS, and JavaScript
 ---
 
 ## Table of Contents
