@@ -1,7 +1,7 @@
 baseURL: https://www.mter.pl/blog
 languageCode: en-us
 title: mterczynski's blog
-theme: ananke
+theme: PaperMod
 
 params:
   author: Michał Terczynski
