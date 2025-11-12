@@ -1,5 +1,10 @@
 ---
-categories: gamedev javascript html css tutorial
+categories:
+  - gamedev
+  - javascript
+  - html
+  - css
+  - tutorial
 date: "2024-07-01T10:34:02Z"
 title: How to create a simple Tic Tac Toe game using HTML, CSS, and JavaScript
 ---

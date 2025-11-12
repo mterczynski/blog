@@ -1,5 +1,6 @@
 ---
-categories: ai
+categories:
+  - ai
 date: "2024-06-20T22:34:02Z"
 title: A short list of 7 awesome and free AI tools
 ---

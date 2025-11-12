@@ -1,5 +1,7 @@
 ---
-categories: design-patterns typescript
+categories:
+  - design-patterns
+  - typescript
 date: "2024-02-28T22:34:02Z"
 title: Builder design pattern in TypeScript
 ---
