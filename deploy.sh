@@ -1,11 +1,11 @@
 # 1. Rebuild
-rm -rf ./_site
-rm -rf ./.jekyll-cache
-bundle exec jekyll build
+rm -rf ./.vitepress/dist
+rm -rf ./.vitepress/cache
+npm run build
 # 2. Update build in ../mterczynski.github.io
 rm -rf ../mterczynski.github.io/blog
 mkdir ../mterczynski.github.io/blog
-cp -r ./_site/* ../mterczynski.github.io/blog/
+cp -r ./.vitepress/dist/* ../mterczynski.github.io/blog/
 cd ../mterczynski.github.io/blog
 # rm -rf ../mterczynski.github.io/index.html
 # cp ./index.html ../mterczynski.github.io/

@@ -1,25 +1,25 @@
 ## Prerequisites
 
-You'll need to have Ruby and RubyGems installed to run or build the application
+You'll need to have [Node.js](https://nodejs.org/) installed to run or build the application.
 
-## Install dependencies from Gemfile
+## Install dependencies
 
 ```bash
-bundle install
+npm install
 ```
 
 ## Running the blog locally
 
 ```bash
-bundle exec jekyll serve # ignore the warning messages
+npm run dev
 ```
 
-Open http://localhost:4000
+Open http://localhost:5173/blog/
 
 ## Building the blog
 
 ```bash
-bundle exec jekyll build # ignore the warning messages
+npm run build
 ```
 
 ## WIP Articles

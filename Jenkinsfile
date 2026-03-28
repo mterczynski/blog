@@ -13,8 +13,9 @@ pipeline {
 		stage('Deploy') {
 			steps {
 				sh '''
-                    bundle exec jekyll build
-					scp -r _site/* ${DESTINATION}
+                    npm ci
+                    npm run build
+					scp -r .vitepress/dist/* ${DESTINATION}
 				'''
 			}
 		}

@@ -1,8 +1,8 @@
 ---
-layout: page
 title: About
-permalink: /about/
 ---
+
+# About
 
 Hi 👋
 I'm Michał, a web game and front-end developer and this is my blog about web programming.
@@ -14,5 +14,3 @@ I'm Michał, a web game and front-end developer and this is my blog about web pr
 
 📱 Website with my projects -> [www.mter.pl](http://www.mter.pl)  
 📚 My GitHub profile -> [github.com/mterczynski](https://github.com/mterczynski/)
-
-[jekyll-organization]: https://github.com/jekyll
