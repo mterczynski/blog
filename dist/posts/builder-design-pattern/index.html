@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Builder design pattern in TypeScript</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>*,*:before,*:after{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;font-size:16px;line-height:1.7;color:#1a1a2e;background:#f8f9fa}header{background:#1a1a2e;color:#fff;padding:0 1rem}.header-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}.site-title{color:#fff;text-decoration:none;font-size:1.2rem;font-weight:700;letter-spacing:.02em}nav{display:flex;gap:1.5rem}nav a{color:#cdd6f4;text-decoration:none;font-size:.95rem;font-weight:500;transition:color .2s}nav a:hover{color:#fff}main{max-width:860px;margin:0 auto;padding:2rem 1rem}footer{text-align:center;padding:2rem 1rem;color:#666;font-size:.875rem;border-top:1px solid #e0e0e0;margin-top:3rem}a{color:#3b82f6;text-decoration:none}a:hover{text-decoration:underline}pre{background:#1e1e2e!important;border-radius:8px;padding:1.25rem;overflow-x:auto;font-size:.9rem;line-height:1.6}code:not(pre code){background:#e8e8f0;padding:.15em .4em;border-radius:4px;font-size:.875em}img{max-width:100%;height:auto}h1,h2,h3,h4,h5,h6{line-height:1.3;color:#0f0f23}blockquote{border-left:4px solid #3b82f6;margin:1.5rem 0;padding:.5rem 1rem;background:#f0f4ff;border-radius:0 6px 6px 0}
+.post-header[data-astro-cid-2q5oecfc]{margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid #e0e0e0}.post-header[data-astro-cid-2q5oecfc] h1[data-astro-cid-2q5oecfc]{font-size:2rem;margin:0 0 .5rem}.post-date[data-astro-cid-2q5oecfc]{color:#666;font-size:.9rem}.post-content[data-astro-cid-2q5oecfc]{max-width:100%}.post-content[data-astro-cid-2q5oecfc] h2{font-size:1.6rem;margin-top:2.5rem;padding-bottom:.4rem;border-bottom:1px solid #e0e0e0}.post-content[data-astro-cid-2q5oecfc] h3{font-size:1.3rem;margin-top:2rem}.post-content[data-astro-cid-2q5oecfc] h4{font-size:1.1rem;margin-top:1.5rem}.post-content[data-astro-cid-2q5oecfc] p{margin:1rem 0}.post-content[data-astro-cid-2q5oecfc] ul,.post-content[data-astro-cid-2q5oecfc] ol{padding-left:1.5rem}.post-content[data-astro-cid-2q5oecfc] li{margin:.4rem 0}
+</style></head> <body> <header> <div class="header-inner"> <a href="/blog" class="site-title">mter.pl/blog</a> <nav> <a href="/blog">Home</a> <a href="/blog/about">About</a> </nav> </div> </header> <main>  <article data-astro-cid-2q5oecfc> <header class="post-header" data-astro-cid-2q5oecfc> <h1 data-astro-cid-2q5oecfc>Builder design pattern in TypeScript</h1> <time datetime="2024-02-28T00:00:00.000Z" class="post-date" data-astro-cid-2q5oecfc>February 28, 2024</time> </header> <div class="post-content" data-astro-cid-2q5oecfc>  <p>The builder pattern allows to easily create complex objects with different configurable properties.
+I’d argue that there are better alternatives to create class instances in TypeScript. I’ll present a few different approaches to use classes in TypeScript and give my opinions on them.</p>
+<p>Let’s start with a basic class:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#6A737D">// 1st example: basic class</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Car</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> color</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> weight</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> price</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> brand</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> productionYear</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  constructor</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">    weight</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    price</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    brand</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    productionYear</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    color</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "red"</span></span>
+<span class="line"><span style="color:#E1E4E8">  ) {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.weight </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> weight;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.price </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> price;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.brand </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> brand;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.productionYear </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> productionYear;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.color </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> color;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getWeight</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.weight;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getPrice</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.price;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getBrand</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.brand;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getProductionYear</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.productionYear;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getColor</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.color;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> car</span><span style="color:#F97583"> =</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Car</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2_000</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">50_000</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Ford"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2013</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<p>This code is a bit lengthy given its simplicity. Let’s make it shorter using <a href="https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties">parameter properties</a> syntax available in TypeScript.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#6A737D">// 2nd example: class with parameter properties</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Car</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  constructor</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> weight</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> price</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> brand</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> productionYear</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> color</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "red"</span></span>
+<span class="line"><span style="color:#E1E4E8">  ) {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getWeight</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.weight;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getPrice</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.price;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getBrand</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.brand;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getProductionYear</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.productionYear;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getColor</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.color;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> car</span><span style="color:#F97583"> =</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Car</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2_000</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">50_000</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Ford"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2013</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<p>The next problem that we have is that there are a lot of parameters in the constructor, which is hard to read. Let’s fix that.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#6A737D">// 3rd example: class with all parameters packed into a single object</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Car</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> color</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> weight</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> price</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> brand</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> productionYear</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  constructor</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#FFAB70">    color</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "red"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    weight</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    price</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    brand</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    productionYear</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#FFAB70">    color</span><span style="color:#F97583">?:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">    weight</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">    price</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">    brand</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">    productionYear</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }) {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.color </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> color;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.weight </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> weight;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.price </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> price;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.brand </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> brand;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.productionYear </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> productionYear;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getWeight</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.weight;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getPrice</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.price;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getBrand</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.brand;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getProductionYear</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.productionYear;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getColor</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.color;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> car</span><span style="color:#F97583"> =</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Car</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  weight: </span><span style="color:#79B8FF">2_000</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  price: </span><span style="color:#79B8FF">50_000</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  brand: </span><span style="color:#9ECBFF">"Ford"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  productionYear: </span><span style="color:#79B8FF">2013</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<p>The code has become lengthy again, but now the code for creating a new car is very readable. We can now also provide the parameters in any order we want which can be very handy.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#6A737D">// this also works:</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> car</span><span style="color:#F97583"> =</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Car</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  brand: </span><span style="color:#9ECBFF">"Ford"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  weight: </span><span style="color:#79B8FF">2_000</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  productionYear: </span><span style="color:#79B8FF">2013</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  price: </span><span style="color:#79B8FF">50_000</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<p>Let’s now introduce one variation of the builder pattern. The builder pattern typically uses 2 separate classes: a builder class
+and a base class. The builder class is usually a class with methods for adjusting the properties of the built object and a method for building the object.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#6A737D">// 4th approach: builder class + class with parameter properties</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> CarBuilder</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> color</span><span style="color:#F97583">?:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> weight</span><span style="color:#F97583">?:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> price</span><span style="color:#F97583">?:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> brand</span><span style="color:#F97583">?:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">  private</span><span style="color:#FFAB70"> productionYear</span><span style="color:#F97583">?:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> setColor</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">color</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.color </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> color;</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> setWeight</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">weight</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.weight </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> weight;</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> setPrice</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">price</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.price </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> price;</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> setBrand</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">brand</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.brand </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> brand;</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> setProductionYear</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">productionYear</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.productionYear </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> productionYear;</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> build</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">this</span><span style="color:#E1E4E8">.weight </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> undefined</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"The weight parameter is required"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">this</span><span style="color:#E1E4E8">.price </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> undefined</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"The price parameter is required"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">this</span><span style="color:#E1E4E8">.brand </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> undefined</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"The brand parameter is required"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">this</span><span style="color:#E1E4E8">.productionYear </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> undefined</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"The productionYear parameter is required"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Car</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">      this</span><span style="color:#E1E4E8">.weight,</span></span>
+<span class="line"><span style="color:#79B8FF">      this</span><span style="color:#E1E4E8">.price,</span></span>
+<span class="line"><span style="color:#79B8FF">      this</span><span style="color:#E1E4E8">.brand,</span></span>
+<span class="line"><span style="color:#79B8FF">      this</span><span style="color:#E1E4E8">.productionYear,</span></span>
+<span class="line"><span style="color:#79B8FF">      this</span><span style="color:#E1E4E8">.color</span></span>
+<span class="line"><span style="color:#E1E4E8">    );</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// the exact same class from 2nd example:</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Car</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  constructor</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> weight</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> price</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> brand</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> productionYear</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#FFAB70"> color</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "red"</span></span>
+<span class="line"><span style="color:#E1E4E8">  ) {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getWeight</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.weight;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getPrice</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.price;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getBrand</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.brand;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getProductionYear</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.productionYear;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  public</span><span style="color:#B392F0"> getColor</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.color;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> carBuilder</span><span style="color:#F97583"> =</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> CarBuilder</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> car</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> carBuilder</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">setWeight</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2_000</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">setBrand</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Ford"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">setPrice</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">50_000</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">setProductionYear</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2013</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">build</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(car.</span><span style="color:#B392F0">getColor</span><span style="color:#E1E4E8">()); </span><span style="color:#6A737D">// red</span></span></code></pre>
+<p>The builder pattern typically uses method chaining which you might know from algorithms operating on arrays or strings.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> client</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> clients</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">client</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> client.age </span><span style="color:#F97583">>=</span><span style="color:#79B8FF"> 18</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">sort</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">prev</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">next</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> prev.name.</span><span style="color:#B392F0">localeCompare</span><span style="color:#E1E4E8">(next.name))</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">find</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">client</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> client.country </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> "Poland"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> result</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> originalString</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">() </span><span style="color:#6A737D">// Remove leading and trailing whitespaces</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">toLowerCase</span><span style="color:#E1E4E8">() </span><span style="color:#6A737D">// Convert the string to lowercase</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">replace</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">","</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// Remove commas</span></span>
+<span class="line"><span style="color:#E1E4E8">  .</span><span style="color:#B392F0">substring</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">); </span><span style="color:#6A737D">// Get the first 5 characters of the string</span></span></code></pre>
+<h4 id="method-chaining">Method chaining</h4>
+<p>Both <code>Array.prototype.filter</code> and <code>Array.prototype.sort</code> return arrays, allowing for an indefinite chaining of array methods. Similarly, builder setters return an instance of a builder, allowing for an indefinite chaining of builder setters. Setter chaining is optional - the <code>return this</code> statement can be omitted and the builder can be accessed in such manner:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#E1E4E8">carBuilder.</span><span style="color:#B392F0">setWeight</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2_000</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">carBuilder.</span><span style="color:#B392F0">setBrand</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Ford"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">carBuilder.</span><span style="color:#B392F0">setPrice</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">50_000</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">carBuilder.</span><span style="color:#B392F0">setProductionYear</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2013</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> car</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> carBuilder.</span><span style="color:#B392F0">build</span><span style="color:#E1E4E8">();</span></span></code></pre>
+<h2 id="conclusions">Conclusions</h2>
+<p>The builder pattern might be useful in Java code, but it doesn’t seem to be that useful in TypeScript code - it requires creating an additional class, preferably with additional error checking (which works only in runtime and won’t show any errors during compilation time).
+I recommend using approaches from 2nd or 3rd examples instead (which one you’d rather use will likely depend on number of constructor parameters).</p>
+<h3 id="extra-notes">Extra notes</h3>
+<ul>
+<li><code>public</code> keyword is optional, I’ve added it to make the examples more understandable for developers with less TypeScript experience.</li>
+<li>getters can be created using <code>get</code> keyword (they are accessed a bit differently though).</li>
+</ul>  </div> </article>  </main> <footer> <p>&copy; 2026 Michał Terczynski</p> </footer> </body></html> 
