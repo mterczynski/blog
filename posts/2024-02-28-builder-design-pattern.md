@@ -1,9 +1,9 @@
 ---
-layout: post
 title: "Builder design pattern in TypeScript"
-date: 2024-02-28 22:34:02 +0100
-categories: design-patterns typescript
+date: 2024-02-28
 ---
+
+# Builder design pattern in TypeScript
 
 The builder pattern allows to easily create complex objects with different configurable properties.
 I'd argue that there are better alternatives to create class instances in TypeScript. I'll present a few different approaches to use classes in TypeScript and give my opinions on them.

@@ -1,9 +1,9 @@
 ---
-layout: post
 title: "How to create a simple Tic Tac Toe game using HTML, CSS, and JavaScript"
-date: 2024-09-08 10:34:02 +0100
-categories: gamedev javascript html css tutorial
+date: 2024-09-08
 ---
+
+# How to create a simple Tic Tac Toe game using HTML, CSS, and JavaScript
 
 ## Table of Contents
 
@@ -84,7 +84,7 @@ If we open the HTML file in the browser, we won't see anything. This is because 
 </style>
 ```
 
-<img width=110 height=398 src="/blog/assets/tic-tac-toe/board-column.png"/>
+<img width=110 height=398 src="/assets/tic-tac-toe/board-column.png"/>
 
 We now have square tiles with black borders but all 9 of them are in one column. Let's fix that with [flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
 
@@ -105,7 +105,7 @@ We now have square tiles with black borders but all 9 of them are in one column.
 By default, divs have `display` property set to `block`, which causes their children with `display: block` to be rendered one under another.
 Flex layouts order their children horizontally by default (due to the fact that `justify-content` has a default value of `row`).
 
-<img width=300 src="/blog/assets/tic-tac-toe/Board.png"/>
+<img width=300 src="/assets/tic-tac-toe/Board.png"/>
 
 Something still seems odd. The borders inside the grid are thicker than the outside ones. This happens because both side and center cells have a 1px border on every side which together combine into 2px wide lines. Let's make sure that there is maximum one line per column and row.
 
@@ -124,8 +124,7 @@ Something still seems odd. The borders inside the grid are thicker than the outs
 </style>
 ```
 
-<!-- <img width=300 src="/blog/assets/tic-tac-toe/board-border-right.png"/> -->
-<img width=300 src="/blog/assets/tic-tac-toe/board-left-right.png"/>
+<img width=300 src="/assets/tic-tac-toe/board-left-right.png"/>
 
 There are no duplicate lines now, but the top line and right lines are now gone. We can fix this by adding 2 borders on the board element.
 
@@ -136,7 +135,7 @@ There are no duplicate lines now, but the top line and right lines are now gone.
 }
 ```
 
-<img width=400 src="/blog/assets/tic-tac-toe/board-3.png"/>
+<img width=400 src="/assets/tic-tac-toe/board-3.png"/>
 
 We have all the borders but the top line and right lines aren't positioned correctly. This happens because the board takes the maximum available width. We can fix this by limiting width of the board to its content width by adding `width: max-content` to board styles.
 
@@ -148,7 +147,7 @@ We have all the borders but the top line and right lines aren't positioned corre
 }
 ```
 
-<img width=340 src="/blog/assets/tic-tac-toe/board-4.png"/>
+<img width=340 src="/assets/tic-tac-toe/board-4.png"/>
 
 The board is now displayed correctly.
 
@@ -190,7 +189,7 @@ Let's log them to see why.
 
 If we open up the console we can see an empty NodeList:
 
-<img src="/blog/assets/tic-tac-toe/tiles.png"/>
+<img src="/assets/tic-tac-toe/tiles.png"/>
 
 This happens because at the moment of executing our JavaScript code, the HTML code inside `<body>` hasn't executed yet.
 We can solve the issue by moving the script tag at the end of the `<body>`.
@@ -211,7 +210,7 @@ We can solve the issue by moving the script tag at the end of the `<body>`.
 
 A small X appears in the tiles after clicking on them. We can also see that the `NodeList` contains 9 elements when we open the console.
 
-<img src="/blog/assets/tic-tac-toe/tiles-correct.png"/>
+<img src="/assets/tic-tac-toe/tiles-correct.png"/>
 
 **Alternative solution**
 
@@ -239,7 +238,7 @@ We've added a tiny bit of interactivity, but the "X" looks unreadable. Let's fix
 
 The X symbols are now readable and centered. We've also added `user-select: none` which prevents users from selecting the text and `cursor: pointer` which adds a nice cursor that encourages users to click the tiles.
 
-<img width="320" src="/blog/assets/tic-tac-toe/board-x-cursor-pointer.png" />
+<img width="320" src="/assets/tic-tac-toe/board-x-cursor-pointer.png" />
 
 ### Back to JavaScript
 
@@ -304,13 +303,13 @@ There are a few ways to tackle this - let's explore some options.
 
 If we assign an index to each tile, we can define the winning lines using these indices.
 
-  <img width="315" src="/blog/assets/tic-tac-toe/board-indexed.png" />
+  <img width="315" src="/assets/tic-tac-toe/board-indexed.png" />
 
 The first row consists of tiles indexed by 0, 1, 2. The second row of tiles 3, 4 and 5. The last row is therefore [6, 7, 8] (<span style="color: blue;">blue lines</span>)  
  Columns consists of tiles: [0, 3, 6], [1, 4, 7], [2, 5, 8] (<span style="color: red;">red lines</span>)  
  Diagonals can be defined by tiles: [0, 4, 8], [2, 4, 6] (<span style="color: green;">green lines</span>)
 
-  <img width="320" src="/blog/assets/tic-tac-toe/board-highlighted-lines.png" />
+  <img width="320" src="/assets/tic-tac-toe/board-highlighted-lines.png" />
 
 We can now use these indices in our code:
 
