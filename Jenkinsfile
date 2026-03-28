@@ -10,12 +10,15 @@ pipeline {
 	}
 
 	stages {
+		stage('Build') {
+			steps {
+				sh 'npm ci'
+				sh 'npm run build'
+			}
+		}
 		stage('Deploy') {
 			steps {
-				sh '''
-                    bundle exec jekyll build
-					scp -r _site/* ${DESTINATION}
-				'''
+				sh 'scp -r _site/* ${DESTINATION}'
 			}
 		}
 	}
