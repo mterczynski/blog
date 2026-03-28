@@ -22,5 +22,5 @@ Analyze the existing blog repository and migrate it to the target framework, sat
 - Theming without Git submodules — npm packages or cdn stylesheets are preferable
 - Easy integration of common features such as comments, view counters, likes, social media sharing, especially on the frontend 
 
-**Branch naming**
+**Branch naming:**  
 Use the following format when creating new branches: convert-<currentFramework>-to-<newFramework>
