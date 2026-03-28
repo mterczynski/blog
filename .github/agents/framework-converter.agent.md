@@ -24,4 +24,4 @@ Analyze the existing blog repository and migrate it to the target framework, sat
 
 **Branch naming:**  
 
-Use the following format when creating new branches: convert-<currentFramework>-to-<newFramework>
+Use the following format when creating new branches: `convert-<currentFramework>-to-<newFramework>`
