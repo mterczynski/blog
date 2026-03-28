@@ -1,7 +1,6 @@
 ---
-layout: post
 title: "A short list of 7 awesome and free AI tools"
-date: 2024-06-20 22:34:02 +0100
+date: 2024-06-20
 categories: ai
 ---
 

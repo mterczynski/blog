@@ -13,8 +13,9 @@ pipeline {
 		stage('Deploy') {
 			steps {
 				sh '''
-                    bundle exec jekyll build
-					scp -r _site/* ${DESTINATION}
+                    npm install
+                    npm run build
+					scp -r dist/* ${DESTINATION}
 				'''
 			}
 		}
