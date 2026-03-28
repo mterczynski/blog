@@ -1,8 +1,8 @@
 ---
-layout: post
 title: "Builder design pattern in TypeScript"
-date: 2024-02-28 22:34:02 +0100
-categories: design-patterns typescript
+date: 2024-02-28
+description: "The builder pattern in TypeScript - is it useful? Let's explore alternatives."
+tags: ["design-patterns", "typescript"]
 ---
 
 The builder pattern allows to easily create complex objects with different configurable properties.
@@ -57,7 +57,7 @@ class Car {
 const car = new Car(2_000, 50_000, "Ford", 2013);
 ```
 
-This code is a bit lenghty given its simplicity. Let's make it shorter using [parameter properties](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties) syntax available in TypeScript.
+This code is a bit lengthy given its simplicity. Let's make it shorter using [parameter properties](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties) syntax available in TypeScript.
 
 ```typescript
 // 2nd example: class with parameter properties
