@@ -1,7 +1,7 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "You'll need to have Ruby and RubyGems installed to run or build the application",
+  "description": "mterczynski's blog, built with VitePress",
   "main": "index.js",
   "scripts": {
     "dev": "vitepress dev",

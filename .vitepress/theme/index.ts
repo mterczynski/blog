@@ -1,2 +1,2 @@
 import DefaultTheme from 'vitepress/theme'
-export default DefaultTheme
+export default { extends: DefaultTheme }
