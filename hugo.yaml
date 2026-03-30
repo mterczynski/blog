@@ -1,0 +1,37 @@
+baseURL: https://www.mter.pl/blog
+languageCode: en-us
+title: mterczynski's blog
+theme: terminal
+
+params:
+  contentTypeName: post
+  themeColor: orange
+  showMenuItems: 3
+  showLanguageSelector: false
+  fullWidthTheme: false
+  centerTheme: true
+  autoCover: true
+  
+  social:
+    - name: github
+      url: https://github.com/mterczynski
+    - name: linkedin
+      url: https://www.linkedin.com/in/mterczynski/
+    - name: email
+      url: mailto:mterczynski1@gmail.com
+
+menu:
+  main:
+    - name: About
+      weight: 1
+      url: /about/
+    - name: Posts
+      weight: 2
+      url: /post/
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: monokai

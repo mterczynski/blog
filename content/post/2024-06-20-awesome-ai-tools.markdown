@@ -1,8 +1,8 @@
 ---
-layout: post
-title: "A short list of 7 awesome and free AI tools"
-date: 2024-06-20 22:34:02 +0100
-categories: ai
+categories:
+  - ai
+date: "2024-06-20T22:34:02Z"
+title: A short list of 7 awesome and free AI tools
 ---
 
 Many AI tools have emerged in the past 2 years. I've tried a few of them and made a short list of those I found the most useful.
