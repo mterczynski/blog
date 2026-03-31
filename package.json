@@ -4,6 +4,7 @@
   "description": "mterczynski's blog, built with VitePress",
   "main": "index.js",
   "scripts": {
+    "start": "vitepress dev",
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview"
