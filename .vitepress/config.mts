@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: "mterczynski's blog",
   description: "Personal blog about web programming, JavaScript, TypeScript and software engineering.",
   base: '/',
   sitemap: {

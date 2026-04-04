@@ -12,7 +12,7 @@ function formatDate(dateStr) {
 }
 </script>
 
-# mterczynski's blog
+# Recent articles
 
 <ul>
   <li v-for="post in posts" :key="post.url">

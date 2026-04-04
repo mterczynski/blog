@@ -29,16 +29,7 @@ npm run preview
 ## Deploy
 
 ```bash
-DEPLOY_HOST=your-server.com \
-DEPLOY_USER=deploy \
-DEPLOY_PATH=/var/www/blog \
 sh deploy.sh
-```
-
-PowerShell (Windows):
-
-```powershell
-.\deploy.ps1 -DeployHost your-server.com -DeployUser deploy -DeployPath /var/www/blog
 ```
 
 ## Theming

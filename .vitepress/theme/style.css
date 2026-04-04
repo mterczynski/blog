@@ -72,13 +72,13 @@ html.dark .VPHome .vp-doc li {
   border-color: rgba(148, 163, 184, 0.16);
 }
 
-.VPHome .vp-doc li:hover {
+.VPHome .vp-doc {
   transform: translateY(-1px);
   border-color: rgba(67, 56, 202, 0.32);
   background: rgba(255, 255, 255, 0.78);
 }
 
-html.dark .VPHome .vp-doc li:hover {
+html.dark .VPHome .vp-doc{
   background: rgba(2, 6, 23, 0.5);
   border-color: rgba(129, 140, 248, 0.28);
 }
@@ -96,10 +96,8 @@ html.dark .VPHome .vp-doc li:hover {
 }
 
 .vp-doc img {
-  display: block;
   max-width: 100%;
   height: auto;
-  margin: 1rem auto;
   border-radius: 10px;
 }
 
