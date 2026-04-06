@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   description: "Personal blog about web programming, JavaScript, TypeScript and software engineering.",
-  base: '/blog-vitepress',
+  base: '/blog',
   sitemap: {
     hostname: 'https://www.mter.pl'
   },
