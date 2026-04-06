@@ -1,0 +1,26 @@
+{
+  "name": "blog",
+  "version": "2.0.0",
+  "description": "mterczynski's blog, built with VitePress",
+  "scripts": {
+    "start": "vitepress dev",
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mterczynski/blog.git"
+  },
+  "keywords": [],
+  "author": "mterczynski",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/mterczynski/blog/issues"
+  },
+  "homepage": "https://github.com/mterczynski/blog#readme",
+  "dependencies": {
+    "vitepress": "^1.6.4"
+  }
+}
