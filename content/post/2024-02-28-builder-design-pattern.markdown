@@ -1,8 +1,7 @@
 ---
-layout: post
-title: "Builder design pattern in TypeScript"
-date: 2024-02-28 22:34:02 +0100
 categories: design-patterns typescript
+date: "2024-02-28T22:34:02Z"
+title: Builder design pattern in TypeScript
 ---
 
 The builder pattern allows to easily create complex objects with different configurable properties.

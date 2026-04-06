@@ -1,0 +1,21 @@
+baseURL: https://www.mter.pl/hugo-blog
+languageCode: en-us
+title: mterczynski's blog
+theme: PaperMod
+
+params:
+  author: Michał Terczynski
+  description: A blog about web programming
+  github_username: mterczynski
+
+menu:
+  main:
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 10
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
