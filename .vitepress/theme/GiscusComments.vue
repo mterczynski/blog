@@ -24,10 +24,12 @@ function loadGiscus() {
   const script = document.createElement('script')
   script.src = 'https://giscus.app/client.js'
   script.setAttribute('data-repo', 'mterczynski/blog')
+  // Unique GraphQL node ID of the mterczynski/blog GitHub repository.
+  // Obtain via: https://api.github.com/repos/mterczynski/blog (field: "node_id")
   script.setAttribute('data-repo-id', 'R_kgDOLN49XA')
-  // To get the category ID: enable GitHub Discussions on the repo, then visit
-  // https://giscus.app and configure it for mterczynski/blog to obtain the value
   script.setAttribute('data-category', 'General')
+  // Unique GraphQL node ID of the "General" Discussions category in the repository.
+  // Obtain via: https://giscus.app — configure it for mterczynski/blog to retrieve the value
   script.setAttribute('data-category-id', 'DIC_kwDOLN49XM4CsABC')
   script.setAttribute('data-mapping', 'pathname')
   script.setAttribute('data-strict', '0')
