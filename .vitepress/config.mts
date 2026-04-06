@@ -25,6 +25,7 @@ export default defineConfig({
   },
   appearance: false,
   themeConfig: {
+      siteTitle: "Mterczynski's blog",
     nav: [
       { text: 'Home', link: '/' },
       { text: 'About', link: '/about' }

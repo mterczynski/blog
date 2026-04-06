@@ -3,11 +3,11 @@ layout: home
 ---
 
 <script setup>
-import { data as posts } from './posts.data.ts'
-import { withBase } from 'vitepress'
+import { data as posts } from './posts.data.ts';
+import { withBase } from 'vitepress';
 
 function formatDate(dateStr) {
-  const date = new Date(dateStr)
+  const date = new Date(dateStr);
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 </script>
