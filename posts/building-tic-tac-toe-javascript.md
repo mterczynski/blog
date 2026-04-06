@@ -13,6 +13,7 @@ date: 2024-09-08
 - [Adding a reset button](#adding-a-reset-button)
 - [Links to playable game and repository](#links-to-playable-game-and-repository)
 
+
 ### Introduction
 
 Tic Tac Toe is an excellent project for beginners in game development. Its simplicity makes it approachable, yet it encompasses key fundamental concepts essential for developing more complex games.
