@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress'
-/* eslint-disable */
+
 export default defineConfig({
   description: "Personal blog about web programming, JavaScript, TypeScript and software engineering.",
-  base: '/blog/',
+  base: '/blog',
   sitemap: {
     hostname: 'https://www.mter.pl'
   },
