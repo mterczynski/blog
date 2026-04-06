@@ -306,7 +306,7 @@ If we assign an index to each tile, we can define the winning lines using these 
   <img width="315" src="/assets/tic-tac-toe/board-indexed.png" alt="Board with index labels used for win detection" loading="lazy" decoding="async" />
 
 The first row consists of tiles indexed by 0, 1, 2. The second row of tiles 3, 4 and 5. The last row is therefore [6, 7, 8] (<span style="color: blue;">blue lines</span>)  
- Columns consists of tiles: [0, 3, 6], [1, 4, 7], [2, 5, 8] (<span style="color: red;">red lines</span>)  
+ Columns consist of tiles: [0, 3, 6], [1, 4, 7], [2, 5, 8] (<span style="color: red;">red lines</span>)  
  Diagonals can be defined by tiles: [0, 4, 8], [2, 4, 6] (<span style="color: green;">green lines</span>)
 
   <img width="320" src="/assets/tic-tac-toe/board-highlighted-lines.png" alt="Board with highlighted winning lines" loading="lazy" decoding="async" />
