@@ -1,15 +1,25 @@
 ---
-title: "Builder design pattern in TypeScript"
+title: "4 ways to create class instances in TypeScript"
 date: 2024-02-28
 ---
 
-The builder pattern allows to easily create complex objects with different configurable properties.
-I'd argue that there are better alternatives to create class instances in TypeScript. I'll present a few different approaches to use classes in TypeScript and give my opinions on them.
+TypeScript gives you several ways to create class instances. The choice is usually a tradeoff between brevity, readability, and flexibility.
+
+In this article, I'll compare four common approaches:
+
+1. a regular constructor
+2. a constructor with parameter properties
+3. a constructor that accepts a single object
+4. the builder pattern
+
+My main point is simple: in most TypeScript code, the builder pattern is unnecessary overhead. A constructor that accepts a single object usually gives you most of the readability benefits with less code and better type support.
+
+## 1. Regular constructor
 
 Let's start with a basic class:
 
 ```typescript
-// 1st example: basic class
+// 1st example: regular constructor
 class Car {
   private color: string;
   private weight: number;
@@ -55,10 +65,14 @@ class Car {
 const car = new Car(2_000, 50_000, "Ford", 2013);
 ```
 
-This code is a bit lengthy given its simplicity. Let's make it shorter using [parameter properties](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties) syntax available in TypeScript.
+This is the most explicit version. Everything is easy to understand, but the class is a bit verbose given how simple it is.
+
+## 2. Constructor with parameter properties
+
+We can make the class shorter by using [parameter properties](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties).
 
 ```typescript
-// 2nd example: class with parameter properties
+// 2nd example: constructor with parameter properties
 class Car {
   constructor(
     private weight: number,
@@ -92,10 +106,16 @@ class Car {
 const car = new Car(2_000, 50_000, "Ford", 2013);
 ```
 
-The next problem that we have is that there are a lot of parameters in the constructor, which is hard to read. Let's fix that.
+This is usually a better version of the first approach. It keeps the same constructor API while removing a lot of boilerplate inside the class.
+
+The downside is still the same: once the constructor grows, a long list of positional arguments becomes harder to read.
+
+## 3. Constructor with a single object
+
+When a constructor has many parameters, especially optional ones, passing a single object is often the cleanest solution.
 
 ```typescript
-// 3rd example: class with all parameters packed into a single object
+// 3rd example: constructor with a single object parameter
 class Car {
   private color: string;
   private weight: number;
@@ -152,7 +172,9 @@ const car = new Car({
 });
 ```
 
-The code has become lengthy again, but now the code for creating a new car is very readable. We can now also provide the parameters in any order we want which can be very handy.
+This version is longer again, but the call site is much more readable.
+
+We can also provide the properties in any order:
 
 ```typescript
 // this also works:
@@ -164,11 +186,16 @@ const car = new Car({
 });
 ```
 
-Let's now introduce one variation of the builder pattern. The builder pattern typically uses 2 separate classes: a builder class
-and a base class. The builder class is usually a class with methods for adjusting the properties of the built object and a method for building the object.
+This is usually my preferred approach when a class needs multiple parameters. It keeps the code explicit, reads well at the call site, and works naturally with TypeScript's type system.
+
+## 4. Builder pattern
+
+Now let's look at the builder pattern.
+
+In Java, builders are often used to avoid long constructors and to improve readability. In TypeScript, they can still work, but they are often not worth the extra code.
 
 ```typescript
-// 4th approach: builder class + class with parameter properties
+// 4th example: builder pattern
 class CarBuilder {
   private color?: string;
   private weight?: number;
@@ -221,7 +248,7 @@ class CarBuilder {
   }
 }
 
-// the exact same class from 2nd example:
+// the same class from the 2nd example:
 class Car {
   constructor(
     private weight: number,
@@ -263,39 +290,34 @@ const car = carBuilder
 console.log(car.getColor()); // red
 ```
 
-The builder pattern typically uses method chaining which you might know from algorithms operating on arrays or strings.
+The builder version is readable, but it comes with a cost:
 
-```typescript
-const client = clients
-  .filter((client) => client.age >= 18)
-  .sort((prev, next) => prev.name.localeCompare(next.name))
-  .find((client) => client.country === "Poland");
+- you need an extra class
+- you duplicate the shape of the constructed object
+- you often move required-field checks to runtime
+- you add more code to maintain without gaining much over the single-object constructor
 
-const result = originalString
-  .trim() // Remove leading and trailing whitespaces
-  .toLowerCase() // Convert the string to lowercase
-  .replace(",", "") // Remove commas
-  .substring(0, 5); // Get the first 5 characters of the string
-```
+Method chaining is pleasant to read, but that alone is not a strong reason to introduce a builder.
 
-#### Method chaining
+## Which approach would I pick?
 
-Both `Array.prototype.filter` and `Array.prototype.sort` return arrays, allowing for an indefinite chaining of array methods. Similarly, builder setters return an instance of a builder, allowing for an indefinite chaining of builder setters. Setter chaining is optional - the `return this` statement can be omitted and the builder can be accessed in such manner:
+For most TypeScript code, my rule of thumb is simple:
 
-```typescript
-carBuilder.setWeight(2_000);
-carBuilder.setBrand("Ford");
-carBuilder.setPrice(50_000);
-carBuilder.setProductionYear(2013);
-const car = carBuilder.build();
-```
+- If the class has only a few parameters, use a regular constructor or parameter properties.
+- If the class has many parameters or several optional fields, use a constructor that accepts a single object.
+- Use a builder only when the object must be constructed step by step, or when you need a more constrained API than a plain object can provide.
 
-## Conclusions
+## Conclusion
 
-The builder pattern might be useful in Java code, but it doesn't seem to be that useful in TypeScript code - it requires creating an additional class, preferably with additional error checking (which works only in runtime and won't show any errors during compilation time).
-I recommend using approaches from 2nd or 3rd examples instead (which one you'd rather use will likely depend on number of constructor parameters).
+The builder pattern is not bad, but in TypeScript it is often unnecessary overhead.
+
+If your class has only a few parameters, a regular constructor or parameter properties are usually enough.
+
+If the constructor has many parameters, passing a single object is often the best option. It improves readability at the call site, lets you reorder properties freely, and works well with the type system.
+
+That is why, in typical TypeScript code, I would usually pick approach 2 or 3 before reaching for a builder.
 
 ### Extra notes
 
-- `public` keyword is optional, I've added it to make the examples more understandable for developers with less TypeScript experience.
-- getters can be created using `get` keyword (they are accessed a bit differently though).
+- The `public` keyword is optional. I've added it to make the examples easier to read for developers with less TypeScript experience.
+- Getters can also be created with the `get` keyword, although they are accessed a bit differently.
