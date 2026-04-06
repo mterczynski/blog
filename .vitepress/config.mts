@@ -24,6 +24,9 @@ export default defineConfig({
     prefetchLinks: false
   },
   appearance: false,
+    markdown: {
+        theme: "catppuccin-latte"
+    },
   themeConfig: {
       outline: 'deep',
       siteTitle: "Mterczynski's blog",
