@@ -3,17 +3,6 @@ title: "How to create a simple Tic Tac Toe game using HTML, CSS, and JavaScript"
 date: 2024-09-08
 ---
 
-## Table of Contents
-
-- [Introduction](#introduction)
-- [HTML Setup, Emmet](#html-setup-emmet)
-- [Styling the board with CSS](#styling-the-board-with-css)
-- [Adding interactivity](#adding-interactivity)
-- [Handling wins](#handling-wins)
-- [Adding a reset button](#adding-a-reset-button)
-- [Links to playable game and repository](#links-to-playable-game-and-repository)
-
-
 ### Introduction
 
 Tic Tac Toe is an excellent project for beginners in game development. Its simplicity makes it approachable, yet it encompasses key fundamental concepts essential for developing more complex games.
