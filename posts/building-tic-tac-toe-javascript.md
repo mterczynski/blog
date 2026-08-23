@@ -357,7 +357,7 @@ const leftDiagonal = [];
 const rightDiagonal = [];
 for (let rowIndex = 0; rowIndex < boardSize; rowIndex++) {
   leftDiagonal.push(board[rowIndex][rowIndex]);
-  rightDiagonal.push(board[boardSize - 1 - rowIndex][boardSize - 1 - rowIndex]);
+  rightDiagonal.push(board[boardSize - 1 - rowIndex][rowIndex]);
 }
 
 const winningLines = [...rows, ...columns, leftDiagonal, rightDiagonal];
